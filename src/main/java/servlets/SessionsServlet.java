@@ -23,8 +23,8 @@ public class SessionsServlet extends HttpServlet {
     //get logged user profile
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) throws ServletException, IOException {
-        String sessionId = request.getSession().getId();
-        UserProfile profile = accountService.getUserBySession(sessionId);
+        String session = request.getSession().getId();
+        UserProfile profile = accountService.getUserBySession(session);
         if (profile == null) {
             response.setContentType("application/json;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -41,7 +41,7 @@ public class SessionsServlet extends HttpServlet {
     public void doPost(HttpServletRequest request,
                        HttpServletResponse response) throws ServletException, IOException {
         String login = request.getParameter("login");
-        String pass = request.getParameter("pass");
+        String pass = request.getParameter("password");
 
         if (login == null || pass == null) {
             response.setContentType("application/json;charset=utf-8");
