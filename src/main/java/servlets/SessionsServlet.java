@@ -26,12 +26,12 @@ public class SessionsServlet extends HttpServlet {
         String sessionId = request.getSession().getId();
         UserProfile profile = accountService.getUserBySession(sessionId);
         if (profile == null) {
-            response.setContentType("text/html;charset=utf-8");
+            response.setContentType("application/json;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         } else {
             Gson gson = new Gson();
             String json = gson.toJson(profile);
-            response.setContentType("text/html;charset=utf-8");
+            response.setContentType("application/json;charset=utf-8");
             response.getWriter().println(json);
             response.setStatus(HttpServletResponse.SC_OK);
         }
@@ -44,14 +44,14 @@ public class SessionsServlet extends HttpServlet {
         String pass = request.getParameter("pass");
 
         if (login == null || pass == null) {
-            response.setContentType("text/html;charset=utf-8");
+            response.setContentType("application/json;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
 
         UserProfile profile = accountService.getUserByLogin(login);
         if (profile == null || !profile.getPassword().equals(pass)) {
-            response.setContentType("text/html;charset=utf-8");
+            response.setContentType("application/json;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }
@@ -59,7 +59,7 @@ public class SessionsServlet extends HttpServlet {
         accountService.addSession(request.getSession().getId(), profile);
         Gson gson = new Gson();
         String json = gson.toJson(profile);
-        response.setContentType("text/html;charset=utf-8");
+        response.setContentType("application/json;charset=utf-8");
         response.getWriter().println(json);
         response.setStatus(HttpServletResponse.SC_OK);
     }
@@ -70,11 +70,11 @@ public class SessionsServlet extends HttpServlet {
         String sessionId = request.getSession().getId();
         UserProfile profile = accountService.getUserBySession(sessionId);
         if (profile == null) {
-            response.setContentType("text/html;charset=utf-8");
+            response.setContentType("application/json;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         } else {
             accountService.deleteSession(sessionId);
-            response.setContentType("text/html;charset=utf-8");
+            response.setContentType("application/json;charset=utf-8");
             response.getWriter().println("Goodbye!");
             response.setStatus(HttpServletResponse.SC_OK);
         }
