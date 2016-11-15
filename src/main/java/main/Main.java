@@ -22,11 +22,12 @@ public class Main {
 
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        context.addServlet(new ServletHolder(new UsersServlet(accServ)),"/users");
-        context.addServlet(new ServletHolder(new SessionsServlet(accServ)),"/sessions");
+        context.addServlet(new ServletHolder(new UsersServlet(accServ)),"/api/v1/users");
+        context.addServlet(new ServletHolder(new SessionsServlet(accServ)),"/api/v1/sessions");
 
         ResourceHandler resHandler = new ResourceHandler();
-        resHandler.setResourceBase("publicHtml");
+        resHandler.setResourceBase("public_html");
+
         HandlerList handlers = new HandlerList();
         handlers.setHandlers(new Handler[]{resHandler,context});
 
