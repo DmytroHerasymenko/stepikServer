@@ -30,4 +30,8 @@ public class AccountService {
     public void deleteSession(String session){
         sessionToProfile.remove(session);
     }
+
+    public UserProfile getUser(String userName) {
+        return loginToProfile.get(userName);
+    }
 }

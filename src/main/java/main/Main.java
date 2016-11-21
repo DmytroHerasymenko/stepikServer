@@ -9,6 +9,8 @@ import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import servlets.SessionsServlet;
+import servlets.SignInServlet;
+import servlets.SignUpServlet;
 import servlets.UsersServlet;
 
 /**
@@ -22,8 +24,8 @@ public class Main {
 
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        context.addServlet(new ServletHolder(new UsersServlet(accServ)),"/api/v1/users");
-        context.addServlet(new ServletHolder(new SessionsServlet(accServ)),"/api/v1/sessions");
+        context.addServlet(new ServletHolder(new SignUpServlet(accServ)),"/signup");
+        context.addServlet(new ServletHolder(new SignInServlet(accServ)),"/signin");
 
         ResourceHandler resHandler = new ResourceHandler();
         resHandler.setResourceBase("public_html");
