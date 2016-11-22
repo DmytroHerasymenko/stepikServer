@@ -22,19 +22,21 @@ public class SignUpServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         String login = request.getParameter("login");
-        String password = request.getParameter("password");
-        accountService.addNewUser(new UserProfile(login, password, ""));
-        response.setStatus(HttpServletResponse.SC_OK);
+        String pass = request.getParameter("password");
+
+            response.setStatus(HttpServletResponse.SC_OK);
+
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 
         String login = request.getParameter("login");
-        String password = request.getParameter("password");
-        accountService.addNewUser(new UserProfile(login, password, ""));
-        response.setContentType("text/html;charset=utf-8");
-        response.getWriter().println("SignUp: " + accountService + " good");
-        response.setStatus(HttpServletResponse.SC_OK);
+        String pass = request.getParameter("password");
+        if(!login.isEmpty() || !pass.isEmpty()) {
+            accountService.addNewUser(new UserProfile(login, pass, ""));
+            response.setContentType("text/html;charset=utf-8");
+            response.setStatus(HttpServletResponse.SC_OK);
+        }
     }
 
 

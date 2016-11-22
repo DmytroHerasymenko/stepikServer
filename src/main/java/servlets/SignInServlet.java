@@ -21,26 +21,32 @@ public class SignInServlet extends HttpServlet{
     }
 
     public void doGet (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        String login = request.getParameter("login");
-        String password = request.getParameter("password");
+        /*String login = request.getParameter("login");
+        String pass = request.getParameter("password");
+        accountService.getUserByLogin(login);*/
+
+
         response.setStatus(HttpServletResponse.SC_OK);
+
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         String login = request.getParameter("login");
-        String password = request.getParameter("password");
-        UserProfile profile = accountService.getUserByLogin(login);
+        String pass = request.getParameter("password");
+        //UserProfile profile = accountService.getUserByLogin(login);
+
+        UserProfile profile = new UserProfile(login,pass, "");
 
 
-        if (profile.getPassword().equals(password)) {
+        if (profile.getLogin().equals(accountService)) {
             response.setContentType("text/html;charset=utf-8");
-            response.getWriter().println("Authorized");
+            response.getWriter().println("Authorized: " + login);
             response.setStatus(HttpServletResponse.SC_OK);
             return;
         } else{
             response.setContentType("text/html;charset=utf-8");
             response.getWriter().println("Unauthorized");
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
     }
 }
