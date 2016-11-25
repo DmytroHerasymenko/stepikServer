@@ -22,25 +22,30 @@ public class SignInServlet extends HttpServlet{
 
     public void doGet (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         String login = request.getParameter("login");
-        String password = request.getParameter("password");
+        String pass = request.getParameter("password");
+        /*accountService.getUserByLogin(login);*/
+
+
         response.setStatus(HttpServletResponse.SC_OK);
+
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         String login = request.getParameter("login");
-        String password = request.getParameter("password");
+        String pass = request.getParameter("password");
+
         UserProfile profile = accountService.getUserByLogin(login);
 
 
-        if (profile.getPassword().equals(password)) {
+        if (!profile.getLogin().isEmpty()) {
             response.setContentType("text/html;charset=utf-8");
-            response.getWriter().println("Authorized");
+            response.getWriter().println("Authorized: " + login);
             response.setStatus(HttpServletResponse.SC_OK);
             return;
         } else{
             response.setContentType("text/html;charset=utf-8");
             response.getWriter().println("Unauthorized");
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
     }
 }

@@ -12,13 +12,31 @@ import servlets.SessionsServlet;
 import servlets.SignInServlet;
 import servlets.SignUpServlet;
 import servlets.UsersServlet;
+import dbService.DBException;
+import dbService.DBService;
+import dbService.dataSets.UsersDataSet;
 
 /**
  * Created by dima on 10.11.16.
  */
 public class Main {
     public static void main(String[] args) throws Exception {
-        AccountService accServ = new AccountService();
+        DBService dbService = new DBService();
+        dbService.printConnectInfo();
+        try {
+            long userId = dbService.addUser("tully");
+            System.out.println("Added user id: " + userId);
+
+            UsersDataSet dataSet = dbService.getUser(userId);
+            System.out.println("User data set: " + dataSet);
+
+            dbService.cleanUp();
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
+
+
+        /*AccountService accServ = new AccountService();
         accServ.addNewUser(new UserProfile("test"));
         accServ.addNewUser(new UserProfile("admin"));
 
@@ -38,6 +56,6 @@ public class Main {
 
         server.start();
         java.util.logging.Logger.getGlobal().info("Server started");
-        server.join();
+        server.join();*/
     }
 }
