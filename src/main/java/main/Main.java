@@ -24,13 +24,13 @@ public class Main {
         DBService dbService = new DBService();
         dbService.printConnectInfo();
         try {
-            long userId = dbService.addUser("tully");
+            long userId = dbService.addUser("dmytro");
             System.out.println("Added user id: " + userId);
 
             UsersDataSet dataSet = dbService.getUser(userId);
             System.out.println("User data set: " + dataSet);
 
-            dbService.cleanUp();
+            //dbService.cleanUp();
         } catch (DBException e) {
             e.printStackTrace();
         }

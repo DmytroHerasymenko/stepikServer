@@ -80,9 +80,9 @@ public class DBService {
                     append("jdbc:mysql://").        //db type
                     append("localhost:").           //host name
                     append("3306/").                //port
-                    append("db_example?").          //db name
-                    append("user=tully&").          //login
-                    append("password=tully");       //password
+                    append("firstDB?").          //db name
+                    append("user=dmytro&").          //login
+                    append("password=1");       //password
 
             System.out.println("URL: " + url + "\n");
 
@@ -97,8 +97,8 @@ public class DBService {
     public static Connection getH2Connection() {
         try {
             String url = "jdbc:h2:./h2db";
-            String name = "tully";
-            String pass = "tully";
+            String name = "dmytro";
+            String pass = "1";
 
             JdbcDataSource ds = new JdbcDataSource();
             ds.setURL(url);
