@@ -26,38 +26,64 @@ public class DBService {
 
     private final SessionFactory sessionFactory;
 
-    public DBService() {
+    public DBService() throws SQLException {
+        Connection connection = getH2Connection();
         Configuration configuration = getH2Configuration();
         sessionFactory = createSessionFactory(configuration);
     }
 
-    /*@SuppressWarnings("UnusedDeclaration")
+    @SuppressWarnings("UnusedDeclaration")
         private Configuration getMySqlConfiguration() {
         Configuration configuration = new Configuration();
         configuration.addAnnotatedClass(UsersDataSet.class);
+            String url = "jdbc:mysql://localhost:3306/db_example";
+            String name = "test";
+            String pass = "test";
 
         configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
         configuration.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
-        configuration.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/db_example");
-        configuration.setProperty("hibernate.connection.username", "tully");
-        configuration.setProperty("hibernate.connection.password", "tully");
-        configuration.setProperty("hibernate.show_sql", hibernate_show_sql);
-        configuration.setProperty("hibernate.hbm2ddl.auto", hibernate_hbm2ddl_auto);
-        return configuration;
-    }*/
-
-    private Configuration getH2Configuration() {
-        Configuration configuration = new Configuration();
-        configuration.addAnnotatedClass(UsersDataSet.class);
-
-        configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
-        configuration.setProperty("hibernate.connection.driver_class", "org.h2.Driver");
-        configuration.setProperty("hibernate.connection.url", "jdbc:h2:./h2db");
+        configuration.setProperty("hibernate.connection.url", url);
         configuration.setProperty("hibernate.connection.username", "test");
         configuration.setProperty("hibernate.connection.password", "test");
         configuration.setProperty("hibernate.show_sql", hibernate_show_sql);
         configuration.setProperty("hibernate.hbm2ddl.auto", hibernate_hbm2ddl_auto);
+            JdbcDataSource ds = new JdbcDataSource();
+            ds.setURL(url);
+            ds.setUser(name);
+            ds.setPassword(pass);
         return configuration;
+    }
+
+    //@SuppressWarnings("UnusedDeclaration")
+    private Configuration getH2Configuration() {
+        Configuration configuration = new Configuration();
+        configuration.addAnnotatedClass(UsersDataSet.class);
+        String url = "jdbc:h2:./h2db";
+        String name = "test";
+        String pass = "test";
+
+        configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
+        configuration.setProperty("hibernate.connection.driver_class", "org.h2.Driver");
+        configuration.setProperty("hibernate.connection.url", url);
+        configuration.setProperty("hibernate.connection.username", name);
+        configuration.setProperty("hibernate.connection.password", pass);
+        configuration.setProperty("hibernate.show_sql", hibernate_show_sql);
+        configuration.setProperty("hibernate.hbm2ddl.auto", hibernate_hbm2ddl_auto);
+
+        return configuration;
+    }
+
+    public static Connection getH2Connection() throws  SQLException{
+
+            String url = "jdbc:h2:./h2db";
+            String name = "test";
+            String pass = "test";
+            JdbcDataSource ds = new JdbcDataSource();
+            ds.setURL(url);
+            ds.setUser(name);
+            ds.setPassword(pass);
+            Connection connection = DriverManager.getConnection(url,name,pass);
+            return connection;
     }
 
     public UsersDataSet getUser(long id) throws DBException {

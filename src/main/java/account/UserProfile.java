@@ -19,6 +19,11 @@ public class UserProfile {
         this.password = login;
         this.email = login;
     }
+    public UserProfile(String login, String password){
+        this.login=login;
+        this.password = password;
+        this.email = login + "@mail";
+    }
 
     public String getLogin() {
         return login;

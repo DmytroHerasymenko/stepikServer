@@ -21,26 +21,14 @@ import dbService.dataSets.UsersDataSet;
  */
 public class Main {
     public static void main(String[] args) throws Exception {
-        DBService dbService = new DBService();
-        dbService.printConnectInfo();
-        try {
-            long userId = dbService.addUser("dmytro", "bart1");
-            System.out.println("Added user id: " + userId);
-
-            UsersDataSet dataSet = dbService.getUser(userId);
-            System.out.println("User data set: " + dataSet);
-
-        } catch (DBException e) {
-            e.printStackTrace();
-        }
-
 
         AccountService accServ = new AccountService();
+        DBService dbService = new DBService();
         //accServ.addNewUser(new UserProfile("test"));
         //accServ.addNewUser(new UserProfile("admin"));
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        context.addServlet(new ServletHolder(new SignUpServlet(accServ)),"/signup");
+        context.addServlet(new ServletHolder(new SignUpServlet(accServ, dbService)),"/signup");
         context.addServlet(new ServletHolder(new SignInServlet(accServ)),"/signin");
 
         ResourceHandler resHandler = new ResourceHandler();
@@ -54,6 +42,19 @@ public class Main {
 
         server.start();
         java.util.logging.Logger.getGlobal().info("Server started");
+        //dbService = new DBService();
+        /*DBService dbService = new DBService();
+        dbService.printConnectInfo();
+        try {
+            long userId = dbService.addUser("dmytro", "bart1");
+            System.out.println("Added user id: " + userId);
+
+            UsersDataSet dataSet = dbService.getUser(userId);
+            System.out.println("User data set: " + dataSet);
+
+        } catch (DBException e) {
+            e.printStackTrace();
+        }*/
         server.join();
     }
 }
