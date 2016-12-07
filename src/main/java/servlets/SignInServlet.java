@@ -3,6 +3,7 @@ package servlets;
 import account.AccountService;
 import account.UserProfile;
 import com.google.gson.Gson;
+import dbService.DBService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,9 +16,11 @@ import java.io.IOException;
  */
 public class SignInServlet extends HttpServlet{
     public final AccountService accountService;
+    public DBService dbService;
 
-    public SignInServlet(AccountService accountService) {
+    public SignInServlet(AccountService accountService, DBService dbService) {
         this.accountService = accountService;
+        this.dbService = dbService;
     }
 
     public void doGet (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
@@ -35,7 +38,6 @@ public class SignInServlet extends HttpServlet{
         String pass = request.getParameter("password");
 
         UserProfile profile = accountService.getUserByLogin(login);
-
 
         if (!profile.getLogin().isEmpty()) {
             response.setContentType("text/html;charset=utf-8");

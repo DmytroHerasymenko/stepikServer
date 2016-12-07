@@ -6,7 +6,6 @@ import com.google.gson.Gson;
 import dbService.DBException;
 import dbService.DBService;
 import dbService.dataSets.UsersDataSet;
-import main.Main;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -45,14 +44,14 @@ public class SignUpServlet extends HttpServlet {
                 long userId = dbService.addUser(login, pass);
                 UsersDataSet user = dbService.getUser(userId);
                 accountService.addNewUser(new UserProfile(user.getName(), user.getPassword()));
-                response.getWriter().println("signUp: " + user.getName());
+                //response.getWriter().println("signUp: " + user.getName());
             } catch (DBException e) {
                 e.printStackTrace();}
 
-
             response.setContentType("text/html;charset=utf-8");
-            //response.getWriter().println("signUp" + accountService.getUser(login));
             response.setStatus(HttpServletResponse.SC_OK);
+            response.sendRedirect(request.getContextPath()+"/signIn.html");
+
         }
     }
 
