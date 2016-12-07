@@ -30,6 +30,7 @@ public class UsersDataSet implements Serializable{ // Serializable Important to 
     @SuppressWarnings("UnusedDeclaration")
     public UsersDataSet(long id, String name) {
         this.setId(id);
+        this.setName(name);
         this.setPassword(name);
     }
 
