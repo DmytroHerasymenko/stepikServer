@@ -29,7 +29,7 @@ public class Main {
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.addServlet(new ServletHolder(new SignUpServlet(accServ, dbService)),"/signup");
-        context.addServlet(new ServletHolder(new SignInServlet(accServ)),"/signin");
+        context.addServlet(new ServletHolder(new SignInServlet(accServ, dbService)),"/signin");
 
         ResourceHandler resHandler = new ResourceHandler();
         resHandler.setResourceBase("public_html");
