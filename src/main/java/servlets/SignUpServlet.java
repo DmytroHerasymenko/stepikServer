@@ -41,16 +41,17 @@ public class SignUpServlet extends HttpServlet {
         String pass = request.getParameter("password");
         if(!login.isEmpty() || !pass.isEmpty()) {
             try {
-                long userId = dbService.addUser(login, pass);
-                UsersDataSet user = dbService.getUser(userId);
-                accountService.addNewUser(new UserProfile(user.getName(), user.getPassword()));
-                //response.getWriter().println("signUp: " + user.getName());
+                accountService.addNewUser(new UserProfile(login, pass));
+                long userId = dbService.addUser(accountService.getUserByLogin(login).getLogin(),accountService.getUserByLogin(login).getPassword());
+                //UsersDataSet user = dbService.getUser(userId);
+                //accountService.addNewUser(new UserProfile(user.getName(), user.getPassword()));
+                response.getWriter().println("signUp: " + dbService.getUser(userId));
             } catch (DBException e) {
                 e.printStackTrace();}
 
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_OK);
-            response.sendRedirect(request.getContextPath()+"/signIn.html");
+            //response.sendRedirect(request.getContextPath()+"/signIn.html");
 
         }
     }
