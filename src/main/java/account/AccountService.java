@@ -31,7 +31,4 @@ public class AccountService {
         sessionToProfile.remove(session);
     }
 
-    public UserProfile getUser(String userName) {
-        return loginToProfile.get(userName);
-    }
 }

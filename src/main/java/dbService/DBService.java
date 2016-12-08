@@ -27,7 +27,7 @@ public class DBService {
     private final SessionFactory sessionFactory;
 
     public DBService() throws SQLException {
-        Connection connection = getH2Connection();
+        //Connection connection = getH2Connection();
         Configuration configuration = getH2Configuration();
         sessionFactory = createSessionFactory(configuration);
     }
@@ -39,6 +39,10 @@ public class DBService {
             String url = "jdbc:mysql://localhost:3306/db_example";
             String name = "test";
             String pass = "test";
+        JdbcDataSource ds = new JdbcDataSource();
+        ds.setURL(url);
+        ds.setUser(name);
+        ds.setPassword(pass);
 
         configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
         configuration.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
@@ -47,10 +51,7 @@ public class DBService {
         configuration.setProperty("hibernate.connection.password", "test");
         configuration.setProperty("hibernate.show_sql", hibernate_show_sql);
         configuration.setProperty("hibernate.hbm2ddl.auto", hibernate_hbm2ddl_auto);
-            JdbcDataSource ds = new JdbcDataSource();
-            ds.setURL(url);
-            ds.setUser(name);
-            ds.setPassword(pass);
+
         return configuration;
     }
 
@@ -73,7 +74,7 @@ public class DBService {
         return configuration;
     }
 
-    public static Connection getH2Connection() throws  SQLException{
+    /*public static Connection getH2Connection() throws  SQLException{
 
             String url = "jdbc:h2:./h2db";
             String name = "test";
@@ -84,12 +85,25 @@ public class DBService {
             ds.setPassword(pass);
             Connection connection = DriverManager.getConnection(url,name,pass);
             return connection;
-    }
+    }*/
 
     public UsersDataSet getUser(long id) throws DBException {
         try {
             Session session = sessionFactory.openSession();
             UsersDAO dao = new UsersDAO(session);
+            UsersDataSet dataSet = dao.get(id);
+            session.close();
+            return dataSet;
+        } catch (HibernateException e) {
+            throw new DBException(e);
+        }
+    }
+
+    public UsersDataSet getUserByLogin(String login) throws DBException {
+        try {
+            Session session = sessionFactory.openSession();
+            UsersDAO dao = new UsersDAO(session);
+            long id = dao.getUserId(login);
             UsersDataSet dataSet = dao.get(id);
             session.close();
             return dataSet;
