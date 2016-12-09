@@ -2,17 +2,14 @@ package servlets;
 
 import account.AccountService;
 import account.UserProfile;
-import com.google.gson.Gson;
 import dbService.DBException;
 import dbService.DBService;
-import dbService.dataSets.UsersDataSet;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 
 /**
  * Created by dima on 17.11.16.
@@ -43,7 +40,7 @@ public class SignUpServlet extends HttpServlet {
             try {
                 accountService.addNewUser(new UserProfile(login, pass));
                 long userId = dbService.addUser(accountService.getUserByLogin(login).getLogin(),accountService.getUserByLogin(login).getPassword());
-                //UsersDataSet user = dbService.getUser(userId);
+                //UsersDataSet user = dbServiceImpl.getUser(userId);
                 //accountService.addNewUser(new UserProfile(user.getName(), user.getPassword()));
                 response.getWriter().println("signUp: " + dbService.getUser(userId));
             } catch (DBException e) {
