@@ -4,7 +4,7 @@ import account.AccountService;
 import account.UserProfile;
 import dbService.DBException;
 import dbService.DBService;
-import dbService.dataSets.UsersDataSet;
+import dbService.DBServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -40,7 +40,7 @@ public class SignInServlet extends HttpServlet{
 
         /*UsersDataSet user = null;
         try {
-            user = dbService.getUserByLogin(login);
+            user = dbServiceImpl.getUserByLogin(login);
         } catch (DBException e) {
             e.printStackTrace();
         }*/
