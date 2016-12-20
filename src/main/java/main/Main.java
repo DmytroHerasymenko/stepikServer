@@ -1,5 +1,6 @@
 package main;
 
+import chat.WebSocketChatServlet;
 import account.AccountService;
 import dbService.DBService;
 import dbService.DBServiceImpl;
@@ -19,7 +20,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
 
         AccountService accServ = new AccountService();
-        DBService dbService = new DBServiceImpl();
+        DBService dbService = DBServiceImpl.instance();
         //accServ.addNewUser(new UserProfile("test"));
         //accServ.addNewUser(new UserProfile("admin"));
 
@@ -27,7 +28,10 @@ public class Main {
         context.addServlet(new ServletHolder(new SignUpServlet(accServ, dbService)),"/signup");
         context.addServlet(new ServletHolder(new SignInServlet(accServ, dbService)),"/signin");
 
+        context.addServlet(new ServletHolder(new WebSocketChatServlet()), "/chat");
+
         ResourceHandler resHandler = new ResourceHandler();
+        resHandler.setDirectoriesListed(true);
         resHandler.setResourceBase("public_html");
 
         HandlerList handlers = new HandlerList();
