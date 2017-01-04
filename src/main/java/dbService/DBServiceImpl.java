@@ -62,7 +62,6 @@ public class DBServiceImpl implements DBService {
         return configuration;
     }
 
-    //@SuppressWarnings("UnusedDeclaration")
     private Configuration getH2Configuration() {
         Configuration configuration = new Configuration();
         configuration.addAnnotatedClass(UsersDataSet.class);
