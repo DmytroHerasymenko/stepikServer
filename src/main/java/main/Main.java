@@ -21,8 +21,6 @@ public class Main {
 
         AccountService accServ = new AccountService();
         DBService dbService = DBServiceImpl.instance();
-        //accServ.addNewUser(new UserProfile("test"));
-        //accServ.addNewUser(new UserProfile("admin"));
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.addServlet(new ServletHolder(new SignUpServlet(accServ, dbService)),"/signup");
@@ -42,19 +40,6 @@ public class Main {
 
         server.start();
         java.util.logging.Logger.getGlobal().info("Server started");
-        //dbServiceImpl = new DBServiceImpl();
-        /*DBServiceImpl dbServiceImpl = new DBServiceImpl();
-        dbServiceImpl.printConnectInfo();
-        try {
-            long userId = dbServiceImpl.addUser("dmytro", "bart1");
-            System.out.println("Added user id: " + userId);
-
-            UsersDataSet dataSet = dbServiceImpl.getUser(userId);
-            System.out.println("User data set: " + dataSet);
-
-        } catch (DBException e) {
-            e.printStackTrace();
-        }*/
         server.join();
     }
 }
